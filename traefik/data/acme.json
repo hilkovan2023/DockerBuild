@@ -1,0 +1,29 @@
+{
+  "buypass": {
+    "Account": {
+      "Email": "yangxk@bupt.cn",
+      "Registration": {
+        "body": {
+          "status": "valid",
+          "contact": [
+            "mailto:yangxk@bupt.cn"
+          ],
+          "termsOfServiceAgreed": true,
+          "orders": "https://api.buypass.com/acme/acct/FebY3K057uxuTg/orders"
+        },
+        "uri": "https://api.buypass.com/acme/acct/FebY3K057uxuTg"
+      },
+      "PrivateKey": "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",
+      "KeyType": "P256"
+    },
+    "Certificates": null
+  },
+  "le-dns": {
+    "Account": null,
+    "Certificates": null
+  },
+  "letsencrypt": {
+    "Account": null,
+    "Certificates": null
+  }
+}

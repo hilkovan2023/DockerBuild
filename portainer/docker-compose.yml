@@ -1,0 +1,18 @@
+version: '3.9'
+services:
+  portainer:
+    # UserName : admin
+    # Password : yang+fh
+    image: portainer/portainer:latest
+    container_name: portainer
+    hostname: portainer
+    restart: always
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "./data:/data"
+    environment:
+      TZ: Asia/Shanghai
+      LANG: en_US.UTF-8
+    ports:
+      - "8000:8000"
+      - "9000:9000"

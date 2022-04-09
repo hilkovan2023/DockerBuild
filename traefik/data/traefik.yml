@@ -1,0 +1,61 @@
+api:
+  dashboard: true
+
+entryPoints:
+  web:
+    address: ":80"
+    http:
+      redirections:
+        entryPoint:
+          to: websecure
+  websecure:
+    address: ":443"
+    http:
+      middlewares:
+        - secureHeaders@file
+        - nofloc@file
+      tls:
+        certResolver: "buypass"
+        domains:
+          - main: "traefik.localhost"
+            sans:
+              - "*.traefik.localhost"
+  tcpep:
+    address: ":3179/tcp"
+  udpep:
+    address: ":3179/udp"
+
+pilot:
+  dashboard: false
+
+providers:
+  docker:
+    endpoint: unix:///var/run/docker.sock
+    exposedByDefault: false
+  file:
+    filename: /configurations/dynamic.yml
+    watch: true
+
+certificatesResolvers:
+  letsencrypt:
+    acme:
+      email: yangxk@bupt.cn
+      storage: acme.json
+      keyType: EC384
+      httpChallenge:
+        entryPoint: web
+  buypass:
+    acme:
+      email: yangxk@bupt.cn
+      storage: acme.json
+      caServer: https://api.buypass.com/acme/directory
+      keyType: EC256
+      httpChallenge:
+        entryPoint: web
+  le-dns:
+    acme:
+      email: yangxk@bupt.cn
+      storage: acme.json
+      keyType: EC384
+      dnsChallenge:
+        provider: acme-dns
