@@ -1,0 +1,58 @@
+groups:
+  - name: hs_alert_group
+    rules:
+      - alert: CPU_负载告警
+        expr: node_load1{job="worker_seal_system_monitor"} > 80
+        for: 30m
+        labels:
+          severity: "warning"
+        annotations:
+          summary: "{{$labels.instance}}:CPU核数使用率过高"
+          description: "设备 {{ $labels.instance }} CPU 使用核数超过80核,current value is  {{ $value }} "
+      - alert: 设备挂机告警
+        expr: up{job=~"worker_seal_system_monitor|worker_store_system_monitor|miner_system_monitor|lotus_system_monitor"} == 0
+        for: 1m
+        labels:
+          severity: "critical"
+        annotations:
+          summary: "{{$labels.instance}} 挂机了"
+
+      - alert: /data1使用率告警
+        expr: ceil((node_filesystem_size_bytes{mountpoint =~"/rootfs/data1",job!="worker_store_system_monitor"}-node_filesystem_free_bytes{mountpoint =~"/rootfs/data1",job!="worker_store_system_monitor"}) *100/(node_filesystem_avail_bytes {mountpoint =~"/rootfs/data1",job!="worker_store_system_monitor"}+(node_filesystem_size_bytes{mountpoint =~"/rootfs/data1",job!="worker_store_system_monitor"}-node_filesystem_free_bytes{mountpoint =~"/rootfs/data1",job!="worker_store_system_monitor"})))  > 70
+        for: 30m
+        labels:
+          severity: "warning"
+        annotations:
+          summary: "注意!{{ $labels.instance }} /data1使用率超过70%，，达到 {{ $value }} %"
+
+      - alert: /data2使用率告警
+        expr: ceil((node_filesystem_size_bytes{mountpoint =~"/rootfs/data2",job!="worker_store_system_monitor"}-node_filesystem_free_bytes{mountpoint =~"/rootfs/data2",job!="worker_store_system_monitor"}) *100/(node_filesystem_avail_bytes {mountpoint =~"/rootfs/data2",job!="worker_store_system_monitor"}+(node_filesystem_size_bytes{mountpoint =~"/rootfs/data2",job!="worker_store_system_monitor"}-node_filesystem_free_bytes{mountpoint =~"/rootfs/data2",job!="worker_store_system_monitor"})))  > 70
+        for: 30m
+        labels:
+          severity: "warning"
+        annotations:
+          summary: "注意!{{ $labels.instance }} /data2使用率超过70%,达到 {{ $value }} %"
+
+      - alert: 根分区使用率告警
+        expr: ceil((node_filesystem_size_bytes{mountpoint =~"/rootfs"}-node_filesystem_free_bytes{mountpoint =~"/rootfs"}) *100/(node_filesystem_avail_bytes {mountpoint =~"/rootfs"}+(node_filesystem_size_bytes{mountpoint =~"/rootfs"}-node_filesystem_free_bytes{mountpoint =~"/rootfs"}))) > 70
+        for: 2m
+        labels:
+          severity: "warning"
+        annotations:
+          summary: "注意!{{ $labels.instance }} 根分区使用率超过70%,达到 {{ $value }} %"
+
+      - alert: 存储数据盘/data2使用量告警
+        expr: ceil((node_filesystem_size_bytes{mountpoint =~"/rootfs/data2",job="worker_store_system_monitor"}-node_filesystem_free_bytes{mountpoint =~"/rootfs/data2",job="worker_store_system_monitor"}) *100/(node_filesystem_avail_bytes {mountpoint =~"/rootfs/data2",job="worker_store_system_monitor"}+(node_filesystem_size_bytes{mountpoint =~"/rootfs/data2",job="worker_store_system_monitor"}-node_filesystem_free_bytes{mountpoint =~"/rootfs/data2",job="worker_store_system_monitor"})))  > 98
+        for: 2m
+        labels:
+          severity: "warning"
+        annotations:
+          summary: "{{ $labels.instance }}/data2使用量已超过98%，停止使用！"
+
+      - alert: 存储数据盘/data1使用量告警
+        expr: ceil((node_filesystem_size_bytes{mountpoint =~"/rootfs/data1",job="worker_store_system_monitor"}-node_filesystem_free_bytes{mountpoint =~"/rootfs/data1",job="worker_store_system_monitor"}) *100/(node_filesystem_avail_bytes {mountpoint =~"/rootfs/data1",job="worker_store_system_monitor"}+(node_filesystem_size_bytes{mountpoint =~"/rootfs/data1",job="worker_store_system_monitor"}-node_filesystem_free_bytes{mountpoint =~"/rootfs/data1",job="worker_store_system_monitor"})))  > 98
+        for: 2m
+        labels:
+          severity: "warning"
+        annotations:
+          summary: "{{ $labels.instance }}/data1使用量已超过98%，停止使用！"

@@ -1,0 +1,61 @@
+# 全局配置项
+global:
+  resolve_timeout: 5m #超时,默认5min
+  #邮箱smtp服务
+  smtp_smarthost: 'smtp.qq.com:465'
+  smtp_from: '879682044@qq.com'
+  smtp_auth_username: '879682044@qq.com'
+  smtp_auth_password: 'otnnebpmtscqbbhf'
+  smtp_require_tls: false
+
+# 定义模板信息
+templates:
+  - '/etc/alertmanager/templates/*.tmpl'   # 路径
+
+# 路由
+route:
+  group_by: ['env','instance','alertname','type','group','job'] # 报警分组依据
+  group_wait: 10s #组等待时间
+  group_interval: 10s # 发送前等待时间
+  repeat_interval: 10m #重复周期
+  receiver: 'mail' # 默认警报接收者
+  routes: # 子路由
+    - receiver: 'wechat'
+      match: # 通过标签去匹配这次告警是否符合这个路由节点；也可以使用  match_re 进行正则匹配
+        severity: Disaster    # 标签severity为Disaster时满足条件，使用wechat警报
+
+# 警报接收者
+receivers:
+  - name: 'mail' #警报名称
+    email_configs:
+      - to: '{{ template "email.to" . }}'  #接收警报的email
+        html: '{{ template "email.to.html" . }}' # 模板
+        send_resolved: true
+
+  - name: 'wechat'
+    wechat_configs:
+      - corp_id: wwad938047c4e7f705        # 企业信息("我的企业"--->"CorpID"[在底部])
+        to_user: '@all'        # 发送给企业微信用户的ID，这里是所有人
+        #   to_party: '' 接收部门ID
+        agent_id: 1000002    # 企业微信("企业应用"-->"自定应用"[Prometheus]--> "AgentId")
+        api_secret: dsar6sd8EIdj-ALfo_fe0Gy7hZirggwNbBWwJqwP2Ak        # 企业微信("企业应用"-->"自定应用"[Prometheus]--> "Secret")
+        message: '{{ template "wechat.default.message" .}}'    # 发送内容（调用模板）
+        send_resolved: true        # 故障恢复后通知
+
+  - name: 'webhook1'
+    webhook_configs:
+      - url: 'http://localhost:8060/dingtalk/webhook1/send'
+        send_resolved: true
+
+  - name: 'webhook2'
+    webhook_configs:
+      - url: 'http://localhost:8060/dingtalk/webhook2/send'
+        send_resolved: true
+
+# 告警抑制
+inhibit_rules:
+  - source_match:
+      severity: 'critical'
+    target_match:
+      severity: 'warning'
+    equal: ['alertname', 'dev', 'instance']
