@@ -1,0 +1,62 @@
+version: "3.9"
+services:
+  elasticsearch:
+    image: elasticsearch:8.2.0
+    container_name: elasticsearch
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+#  查token -- bin/elasticsearch-create-enrollment-token
+#  设置密码 -- bin/elasticsearch-setup-passwords interactive
+#    Changed password for user [apm_system]
+#    Changed password for user [kibana_system]
+#    Changed password for user [kibana]
+#    Changed password for user [logstash_system]
+#    Changed password for user [beats_system]
+#    Changed password for user [remote_monitoring_user]
+#    Changed password for user [elastic] 使用这个账户，密码123456
+    volumes:
+#      - ./elasticsearch/data:/usr/share/elasticsearch/data
+#      - ./elasticsearch/logs:/usr/share/elasticsearch/logs
+      - ./elasticsearch/plugins:/usr/share/elasticsearch/plugins
+#      - ./elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+
+  kibana:
+    image: kibana:8.2.0
+    container_name: kibana
+    ports:
+      - "5601:5601"
+    environment:
+      - I18N_LOCALE=zh-CN
+    volumes:
+#      - ./kibana/kibana.yml:/usr/share/kibana/config/kibana.yml
+      - ./kibana/data:/usr/share/kibana/data
+    depends_on:
+      - elasticsearch
+
+  logstash:
+    image: logstash:8.2.0
+    container_name: logstash
+#    volumes:
+#      - ./logstash/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
+#      - ./logstash/template.json:/etc/logstash/template.json
+#      - /var/run/docker.sock:/var/run/docker.sock
+#      - ./filebeat/logs:/usr/share/filebeat/logs
+#      - ./filebeat/data:/usr/share/filebeat/data
+    ports:
+      - "5044:5044"
+      - "9600:9600"
+#    environment:
+#      LS_JAVA_OPTS: "-Xms512m -Xmx512m"
+    depends_on:
+      - elasticsearch
+
+  filebeat:
+    image: elastic/filebeat:8.2.0
+    container_name: filebeat
+    volumes:
+      - ./filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml
+      - ./filebeat/logs:/var/log/filebeat/logs
+    depends_on:
+      - elasticsearch
+      - kibana

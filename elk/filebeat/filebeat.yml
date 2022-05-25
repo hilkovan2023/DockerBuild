@@ -1,0 +1,48 @@
+filebeat:
+  inputs:
+    - type: log
+      enabled: true
+      paths:
+        - /Users/yangxk/GOPATH/src/github.com/hwholiday/learning_tools/go-kit/v11/user_agent/client/logs/*.log
+      document_type: "kit-client"   #指定类型  在elastic中可通过[type]识别
+      fields:
+        tag: kit-client
+
+    - type: log
+      enabled: true
+      paths:
+        - /Users/yangxk/GOPATH/src/github.com/hwholiday/learning_tools/go-kit/v11/user_agent/client/logs/go-kit-v11-server-*.log
+      document_type: "kit-server"   #指定类型  在elastic中可通过[type]识别
+      fields:
+        tag: kit-server
+
+filebeat.autodiscover:
+  providers:
+    - type: docker
+      hints.enabled: true
+setup:
+  ilm:
+    enabled: false
+
+#template:
+#  settings:
+#    index:
+#      number_of_shards: 1
+#      number_of_replicas: 0
+#  name: "filebeat"
+#  pattern: "filebeat-*"
+kibana:
+  host: "kibana:5601"
+
+output:
+  logstash:
+    hosts: ["logstash:5044"]
+#  elasticsearch:
+#    hosts: ["elasticsearch:9200"]
+#    index: "filebeat-%{+yyyy.MM.dd}"
+
+
+# 积累1024条消息才上报
+#spool_size: 1024
+# 或者空闲5s上报
+#idle_timeout: "5s"
