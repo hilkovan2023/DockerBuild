@@ -1,0 +1,25 @@
+[2022-05-09T22:27:20.375+0000][244][gc,init] CardTable entry size: 512
+[2022-05-09T22:27:20.395+0000][244][gc     ] Using G1
+[2022-05-09T22:27:20.398+0000][244][gc,init] Version: 18+36 (release)
+[2022-05-09T22:27:20.398+0000][244][gc,init] CPUs: 4 total, 4 available
+[2022-05-09T22:27:20.399+0000][244][gc,init] Memory: 3933M
+[2022-05-09T22:27:20.400+0000][244][gc,init] Large Page Support: Disabled
+[2022-05-09T22:27:20.401+0000][244][gc,init] NUMA Support: Disabled
+[2022-05-09T22:27:20.401+0000][244][gc,init] Compressed Oops: Enabled (32-bit)
+[2022-05-09T22:27:20.402+0000][244][gc,init] Heap Region Size: 1M
+[2022-05-09T22:27:20.403+0000][244][gc,init] Heap Min Capacity: 8M
+[2022-05-09T22:27:20.403+0000][244][gc,init] Heap Initial Capacity: 62M
+[2022-05-09T22:27:20.404+0000][244][gc,init] Heap Max Capacity: 984M
+[2022-05-09T22:27:20.405+0000][244][gc,init] Pre-touch: Disabled
+[2022-05-09T22:27:20.406+0000][244][gc,init] Parallel Workers: 4
+[2022-05-09T22:27:20.406+0000][244][gc,init] Concurrent Workers: 1
+[2022-05-09T22:27:20.407+0000][244][gc,init] Concurrent Refinement Workers: 4
+[2022-05-09T22:27:20.407+0000][244][gc,init] Periodic GC: Disabled
+[2022-05-09T22:27:20.408+0000][244][gc,metaspace] CDS archive(s) not mapped
+[2022-05-09T22:27:20.409+0000][244][gc,metaspace] Compressed class space mapped at: 0x0000000100000000-0x0000000140000000, reserved size: 1073741824
+[2022-05-09T22:27:20.410+0000][244][gc,metaspace] Narrow klass base: 0x0000000000000000, Narrow klass shift: 3, Narrow klass range: 0x140000000
+[2022-05-09T22:27:20.466+0000][244][gc,heap,exit] Heap
+[2022-05-09T22:27:20.468+0000][244][gc,heap,exit]  garbage-first heap   total 63488K, used 1558K [0x00000000c2800000, 0x0000000100000000)
+[2022-05-09T22:27:20.476+0000][244][gc,heap,exit]   region size 1024K, 2 young (2048K), 0 survivors (0K)
+[2022-05-09T22:27:20.478+0000][244][gc,heap,exit]  Metaspace       used 3521K, committed 3584K, reserved 1114112K
+[2022-05-09T22:27:20.479+0000][244][gc,heap,exit]   class space    used 271K, committed 320K, reserved 1048576K

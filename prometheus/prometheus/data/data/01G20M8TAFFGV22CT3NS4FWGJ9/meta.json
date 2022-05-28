@@ -1,0 +1,17 @@
+{
+	"ulid": "01G20M8TAFFGV22CT3NS4FWGJ9",
+	"minTime": 1650960000000,
+	"maxTime": 1650967200000,
+	"stats": {
+		"numSamples": 1237697,
+		"numSeries": 1328,
+		"numChunks": 9344
+	},
+	"compaction": {
+		"level": 1,
+		"sources": [
+			"01G20M8TAFFGV22CT3NS4FWGJ9"
+		]
+	},
+	"version": 1
+}

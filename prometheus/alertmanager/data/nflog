@@ -1,0 +1,17 @@
+¨
+—
+m{}/{severity="Disaster"}:{alertname="å®ä¾‹å­˜æ´»å‘Šè­¦", instance="node-exporter:9100", job="node-exporter"}
+mailemail*ƒœ˜“ØïôÕ:	êÊé˜¤ÆòíDƒË²“ØïôÕv
+f
+9{}/{severity="Disaster"}:{alertname="å®ä¾‹å­˜æ´»å‘Šè­¦"}
+wechatwechat*¢õ—“À©Ø†:	êÊé˜¤ÆòíD¢¤²“À©Ø†«
+š
+m{}/{severity="Disaster"}:{alertname="å®ä¾‹å­˜æ´»å‘Šè­¦", instance="node-exporter:9100", job="node-exporter"}
+wechatwechat*—Ÿ˜“¿Ò€¶:	êÊé˜¤ÆòíD—Î²“¿Ò€¶‡
+w
+M{}:{alertname="NodeDown", instance="node-exporter:9100", job="node-exporter"}
+mailemail*«Ÿ˜“˜÷Ÿ¡:	Æªéí×ºÛª	«Î²“˜÷Ÿ¡¢
+‘
+c{}/{severity="Disaster"}:{alertname="å®ä¾‹å­˜æ´»å‘Šè­¦", instance="dingtalk:9100", job="dingtalk"}
+wechatwechat*°«™“×î­º:
+Œª¥¶ˆ¶Îà°Ú³“×î­º
