@@ -1,7 +1,6 @@
 version: "3.9"
 services:
   etcd:
-    hostname: etcd
     image: pachyderm/etcd:v3.5.2-arm64
     container_name: etcd
     deploy:
@@ -25,14 +24,18 @@ services:
       - "ETCD_DATA_DIR=/opt/bitnami/etcd/conf"
 
   e3w:
-    hostname: e3w
     image: soyking/e3w:v0.1.1
     container_name: e3w
-    deploy:
-      replicas: 1
-      restart_policy:
-        condition: on-failure
     ports:
       - "8080:8080"
     volumes:
       - "./e3w/conf:/app/conf"
+
+  etcdv3-browser:
+    # https://github.com/gohutool/boot4go-etcdv3-browser
+    # Default Username/Password ginghan/123456
+    # Add '192.168.1.101 etcdv3-broswer.joinsunsoft.com' to /etc/hosts/hosts file
+    image: joinsunsoft/etcdv3-browser:0.9.0
+    container_name: etcdv3-browser
+    ports:
+      - "9980:80"
