@@ -1,0 +1,34 @@
+version: '3.9'
+services:
+  # 安装kuboard，管理k8s
+  # 账号：admin
+  # 密码：Kuboard123
+  kuboard:
+    image: eipwork/kuboard:v3.5.0.3-arm64
+    container_name: kuboard
+    restart: unless-stopped
+    ports:
+      - "80:80/tcp"
+      - "10081:10081/tcp"
+    volumes:
+      - "./kuboard/data:/data"
+
+  # 离线资源包，安装k8s
+  kuboard-spray-arm64:
+    image: eipwork/kuboard-spray:v1.2.0-arm64
+    container_name: kuboard-spray-arm64
+    ports:
+      - "81:80/tcp"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "./kuboard-spray/data-arm64:/data"
+
+  # 离线资源包，安装k8s
+  kuboard-spray-amd64:
+    image: eipwork/kuboard-spray:v1.2.0-amd64
+    container_name: kuboard-spray-amd64
+    ports:
+      - "82:80/tcp"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "./kuboard-spray/data-amd64:/data"
