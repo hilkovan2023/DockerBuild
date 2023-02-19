@@ -1,0 +1,27 @@
+version: '3.9'
+services:
+  mariadb:
+    image: mariadb:latest
+    restart: always
+    container_name: mariadb
+    ports:
+      # 端口映射
+      - 3306:3306
+    volumes:
+      # 数据库目录映射
+      - ./mariadb/data:/var/lib/mysql
+      # 数据库配置文件映射
+      - ./mariadb/config/data:/etc/mysql
+
+  postgresql:
+    image: bitnami/postgresql:latest
+    environment:
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_USER: root
+      POSTGRES_DB: xxxx
+      TZ: Asia/Shanghai
+    ports:
+      - 5432:5432
+    volumes:
+      - ./postgresql/data:/var/lib/postgresql/data
+    restart: always

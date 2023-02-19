@@ -4,22 +4,32 @@ services:
   # 账号：admin
   # 密码：Kuboard123
   kuboard-arm64:
-    image: eipwork/kuboard:v3.5.1.1-arm64
+    image: eipwork/kuboard:v3.5.2.0-arm64
     container_name: kuboard-arm64
     restart: unless-stopped
     ports:
       - "80:80/tcp"
       - "10081:10081/tcp"
+      - "10081:10081/udp"
+    environment:
+      - KUBOARD_ENDPOINT="http://192.168.174.132:80"
+      - KUBOARD_AGENT_SERVER_UDP_PORT="10081"
+      - KUBOARD_AGENT_SERVER_TCP_PORT="10081"
     volumes:
       - "./kuboard/data-arm64:/data"
 
   kuboard-amd64:
-    image: eipwork/kuboard:v3.5.1.1-amd64
+    image: eipwork/kuboard:v3.5.2.0-amd64
     container_name: kuboard-amd64
     restart: unless-stopped
     ports:
       - "80:80/tcp"
       - "10081:10081/tcp"
+      - "10081:10081/udp"
+    environment:
+      - KUBOARD_ENDPOINT="http://192.168.174.132:80"
+      - KUBOARD_AGENT_SERVER_UDP_PORT="10081"
+      - KUBOARD_AGENT_SERVER_TCP_PORT="10081"
     volumes:
       - "./kuboard/data-amd64:/data"
 
@@ -27,6 +37,8 @@ services:
   kuboard-spray-arm64:
     image: eipwork/kuboard-spray:latest-arm64
     container_name: kuboard-spray-arm64
+    restart: unless-stopped
+    privileged: true
     ports:
       - "81:80/tcp"
     volumes:
@@ -37,6 +49,8 @@ services:
   kuboard-spray-amd64:
     image: eipwork/kuboard-spray:latest-amd64
     container_name: kuboard-spray-amd64
+    restart: unless-stopped
+    privileged: true
     ports:
       - "82:80/tcp"
     volumes:
