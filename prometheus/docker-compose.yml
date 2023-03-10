@@ -6,8 +6,6 @@ services:
     container_name: node-exporter
     ports:
       - "9100:9100"
-    networks:
-      - "prom"
 
   dingtalk:
     image: timonwong/prometheus-webhook-dingtalk:latest
@@ -16,13 +14,9 @@ services:
       - "./dingtalk/config.yml:/etc/prometheus-webhook-dingtalk/config.yml:ro"
     ports:
       - "8060:8060"
-    networks:
-      - "prom"
     entrypoint: /bin/prometheus-webhook-dingtalk --ding.profile="webhook1=https://oapi.dingtalk.com/robot/send?access_token=***********"
 
   alertmanager:
-#    depends_on:
-#      - dingtalk
     image: prom/alertmanager:latest
     container_name: alertmanager
     volumes:
@@ -32,12 +26,8 @@ services:
     ports:
       - "9093:9093"
       - "9094:9094"
-    networks:
-      - "prom"
 
   prometheus:
-#    depends_on:
-#      - alertmanager
     image: prom/prometheus:latest
     container_name: prometheus
     volumes:
@@ -46,14 +36,10 @@ services:
       - "./prometheus/data:/prometheus"
     ports:
       - "9090:9090"
-    networks:
-      - "prom"
     command:
       - "--config.file=/etc/prometheus/prometheus.yml"
 
   grafana:
-    depends_on:
-      - prometheus
     # admin admin
     image: grafana/grafana:latest
     container_name: grafana
@@ -61,9 +47,3 @@ services:
       - "./grafana/data:/var/lib/grafana"
     ports:
       - "3000:3000"
-    networks:
-      - "prom"
-
-networks:
-  prom:
-    driver: bridge
