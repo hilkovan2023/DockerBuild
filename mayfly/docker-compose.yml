@@ -19,6 +19,7 @@ services:
     restart: always
 
   server:
+    # admin Y@fh
     image: mayflygo/mayfly-go:v1.4.0
     build:
       context: .
