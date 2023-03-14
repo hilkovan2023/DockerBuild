@@ -1,0 +1,15 @@
+﻿version: '3.9'
+services:
+  frpc:
+    image: stilleshan/frpc:latest
+    container_name: frpc
+    volumes:
+      - ./frpc/frpc.ini:/frp/frpc.ini
+    restart: always
+
+  starryfrpc:
+    image: starryfrp/frpc:22.5.13
+    container_name: starryfrp
+    volumes:
+      - ./starryfrpc/frpc.ini:/frpc.ini
+    restart: always
